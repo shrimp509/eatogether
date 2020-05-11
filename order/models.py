@@ -50,9 +50,9 @@ class Item(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{}點了{}個{}，特殊要求{}".format(
+        return "{}點了{}個{}，備註:{}".format(
             self.creator,
-            self.product,
             self.count,
+            self.product,
             self.remarks
         )
