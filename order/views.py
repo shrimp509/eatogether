@@ -46,10 +46,47 @@ def new_order(request: WSGIRequest):
 
 
 @csrf_exempt
-def new_order(request: WSGIRequest):
+def follow(request: WSGIRequest):
+    """
+        request_body:
+        {
+            "order_id": 1,
+            "creator": "Sam",
+            "product": "雞排",
+            "count": 1,
+            "remarks": "胡椒、不要辣"
+        }
+
+        response_body:
+        {
+            "status": "success"
+        }
+    """
     if request.method == 'POST':
         data_in = json.loads(request.body)
-        return _json(status='Yes, I got your POST method request', data_in=data_in)
+
+        # check expired
+        order = Order.objects.filter(id=data_in['order_id']).first()
+        if order is None:
+            return _json(status='Failed to follow order', exception='order id not found')
+        if order.is_expired():
+            return _json(status='Failed to follow order', exception='order expired')
+
+        try:
+            item = Item()
+            item.order = order
+            user = User.objects.filter(name=data_in['creator']).first()
+            if user is None:
+                user = User()
+                user.name = data_in['creator']
+            item.creator = user
+            item.product = data_in['product']
+            item.remarks = data_in['remarks']
+            item.count = data_in['count']
+            item.save()
+        except Exception as e:
+            return _json(status='Failed to follow order', exception=str(e), data_in=data_in)
+        return _json(status='Create follow item', item_id=item.id, data_in=data_in)
     return _json(status='No such method')
 
 

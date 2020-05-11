@@ -23,4 +23,7 @@ urlpatterns = [
 
     path('new_order', new_order),
     path('new_order/', new_order),
+
+    path('follow', follow),
+    path('follow/', follow),
 ]
