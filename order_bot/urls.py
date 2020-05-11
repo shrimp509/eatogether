@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from order.views import new_order
+from order.views import new_order, follow
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('new_order', new_order),
     path('new_order/', new_order),
 ]
