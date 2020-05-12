@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 
 from order.views import new_order, follow
+from slack_api.views import new_order_in#, follow_in
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +28,10 @@ urlpatterns = [
 
     path('follow', follow),
     path('follow/', follow),
+
+    path('slack/new_order', new_order_in),
+    path('slack/new_order/', new_order_in),
+
+    # path('slack/follow', follow_in),
+    # path('slack/follow/', follow_in),
 ]
