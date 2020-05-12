@@ -3,18 +3,6 @@ from django.db import models
 from account.models import User
 from django.utils import timezone
 
-'''
-request_body:
-{
-    "creator": "Sam",
-    "title": "青子菁吃起來",
-    "content": "雞排/炸物",
-    "menu_url": "google.com",
-    "max_followers": 0,
-    "deadline": 20
-}
-'''
-
 
 class Order(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)

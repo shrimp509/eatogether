@@ -28,8 +28,8 @@ def new_order(request: WSGIRequest):
         }
     """
     if request.method == 'POST':
-        data_in = json.loads(request.body)
         try:
+            data_in = json.loads(request.body)
             order = Order()
             order.creator = User.objects.get(name=data_in['creator'])
             order.title = data_in['title']
